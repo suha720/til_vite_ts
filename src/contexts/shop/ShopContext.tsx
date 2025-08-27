@@ -1,14 +1,3 @@
-# Context API 와 useReudce 예제
-
-- 시나리오
-  - 쇼핑몰 장바구니, 잔액 관리
-
-## 1. 폴더 및 파일 구조
-
-- /src/contexts/shop 폴더 생성
-- /src/contexts/shop/ShopContext.tsx 파일 생성
-
-```tsx
 import React, { createContext, useContext, useReducer } from 'react';
 
 // 1. 초기값
@@ -172,22 +161,10 @@ export const ShopProvider: React.FC<React.PropsWithChildren> = ({ children }) =>
   return <ShopContext.Provider value={value}>{children}</ShopContext.Provider>;
 };
 // 5. 커스텀 훅
-function useShop() {
+export function useShop() {
   const ctx = useContext(ShopContext);
   if (!ctx) {
     throw new Error('Shop 컨텍스트가 생성되지 않았습니다.');
   }
   return ctx;
 }
-```
-
-- /src/components/shop 폴더 생성
-- /src/components/shop/GoodList.tsx 파일 생성
-- /src/components/shop/Cart.tsx 파일 생성
-- /src/components/shop/Wallet.tsx 파일 생성
-
-- App.tsx 수정
-
-```tsx
-
-```

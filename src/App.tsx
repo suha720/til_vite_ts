@@ -1,23 +1,21 @@
-import TodoList from './components/todos/TodoList';
-import TodoWrite from './components/todos/TodoWrite';
-import { TodoProvider } from './contexts/TodoContext';
+import Cart from './components/shop/Cart';
+import GoodList from './components/shop/GoodList';
+import Wallet from './components/shop/Wallet';
+import { ShopProvider } from './contexts/shop/ShopContext';
 
-// export type TodoType = { id: string; title: string; completed: boolean };
-
-// 초기 값
-
-function App() {
+const App = () => {
   return (
     <div>
-      <h1>할일 웹서비스</h1>
-      <TodoProvider>
+      <h1>나의 가게</h1>
+      <ShopProvider>
         <div>
-          <TodoWrite />
-          <TodoList />
+          <GoodList />
+          <Cart />
+          <Wallet />
         </div>
-      </TodoProvider>
+      </ShopProvider>
     </div>
   );
-}
+};
 
 export default App;
