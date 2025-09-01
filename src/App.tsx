@@ -9,6 +9,7 @@ import CartPage from './pages/CartPage';
 import WalletPage from './pages/WalletPage';
 import NotFound from './pages/NotFound';
 import type React from 'react';
+import Calendar from './pages/Calendar';
 
 const App = () => {
   const page: React.CSSProperties = {
@@ -61,6 +62,7 @@ const App = () => {
           </NavLink>
         </nav>
         <h1>👀 나의 가게</h1>
+        <Calendar/>
         <ShopProvider>
           <div>
             <Routes>
