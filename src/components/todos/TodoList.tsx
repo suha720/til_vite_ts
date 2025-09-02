@@ -1,5 +1,5 @@
 import type React from 'react';
-import type { TodoType } from '../../types/TodoType';
+import type { Todo, TodoType } from '../../types/TodoType';
 import TodoItem from './TodoItem';
 import { useTodos } from '../../contexts/TodoContext';
 
@@ -13,7 +13,7 @@ const TodoList = ({}: TodoListProps): JSX.Element => {
     <div>
       <h2>목록</h2>
       <ul>
-        {todos.map((item: TodoType) => (
+        {todos.map((item: Todo) => (
           <TodoItem key={item.id} todo={item} />
         ))}
       </ul>
