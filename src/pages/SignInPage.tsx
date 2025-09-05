@@ -14,7 +14,9 @@ function SignInPage() {
     if (error) {
       setMsg(`로그인 오류 : ${error}`);
     } else {
-      setMsg(`로그인 성공}`);
+      setMsg(`로그인 성공`);
+      setPw('');
+      setEmail('');
     }
   };
   return (

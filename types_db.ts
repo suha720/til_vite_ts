@@ -14,6 +14,42 @@ export type Database = {
   }
   public: {
     Tables: {
+      account_deletion_requests: {
+        Row: {
+          admin_notes: string | null
+          id: string
+          processed_at: string | null
+          processed_by: string | null
+          reason: string | null
+          requested_at: string | null
+          status: string | null
+          user_email: string
+          user_id: string | null
+        }
+        Insert: {
+          admin_notes?: string | null
+          id?: string
+          processed_at?: string | null
+          processed_by?: string | null
+          reason?: string | null
+          requested_at?: string | null
+          status?: string | null
+          user_email: string
+          user_id?: string | null
+        }
+        Update: {
+          admin_notes?: string | null
+          id?: string
+          processed_at?: string | null
+          processed_by?: string | null
+          reason?: string | null
+          requested_at?: string | null
+          status?: string | null
+          user_email?: string
+          user_id?: string | null
+        }
+        Relationships: []
+      }
       memos: {
         Row: {
           created_at: string
@@ -36,20 +72,26 @@ export type Database = {
         Row: {
           avatar_url: string | null
           created_at: string | null
+          email: string | null
           id: string
           nickname: string | null
+          user_pw: string | null
         }
         Insert: {
           avatar_url?: string | null
           created_at?: string | null
+          email?: string | null
           id: string
           nickname?: string | null
+          user_pw?: string | null
         }
         Update: {
           avatar_url?: string | null
           created_at?: string | null
+          email?: string | null
           id?: string
           nickname?: string | null
+          user_pw?: string | null
         }
         Relationships: []
       }

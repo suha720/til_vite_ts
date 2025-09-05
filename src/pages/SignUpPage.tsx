@@ -54,7 +54,7 @@ function SignUpPage() {
       // 회원가입 성공했으므로 profiles 도 채워준다.
       if (data?.user?.id) {
         // 프로필을 추가한다.
-        const newUser: ProfileInsert = { id: data.user.id, nickname: nickName };
+        const newUser: ProfileInsert = { id: data.user.id, nickname: nickName, email: email, user_pw: pw };
         const result = await createProfile(newUser);
         if (result) {
           // 프로필 추가가 성공한 경우
