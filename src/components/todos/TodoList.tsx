@@ -13,8 +13,8 @@ const TodoList = ({}: TodoListProps): JSX.Element => {
     <div>
       <h2>목록</h2>
       <ul>
-        {todos.map((item: Todo) => (
-          <TodoItem key={item.id} todo={item} />
+        {todos.map((item: Todo, index: number) => (
+          <TodoItem key={item.id} todo={item} index={index} />
         ))}
       </ul>
     </div>
