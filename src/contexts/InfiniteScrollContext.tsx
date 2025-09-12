@@ -1,4 +1,11 @@
-import { createContext, useContext, useEffect, useReducer, type PropsWithChildren } from 'react';
+import {
+  act,
+  createContext,
+  useContext,
+  useEffect,
+  useReducer,
+  type PropsWithChildren,
+} from 'react';
 import type { Todo } from '../types/TodoType';
 import {
   getTodosInfinite,
@@ -7,6 +14,7 @@ import {
   deleteTodo as deletedServiceTodo,
   createTodo,
 } from '../services/TodoService';
+import { supabase } from '../lib/supabase';
 
 // 1. 초기값
 type InfiniteScrollState = {
@@ -18,7 +26,7 @@ type InfiniteScrollState = {
 };
 const initialState: InfiniteScrollState = {
   todos: [],
-  hasMore: false,
+  hasMore: true,
   totalCount: 0,
   loading: false,
   loadingMore: false,
@@ -98,7 +106,7 @@ function reducer(state: InfiniteScrollState, action: InfiniteScrollAction): Infi
       // 추가
       return {
         ...state,
-        todos: [...action.payload.todos, ...state.todos],
+        todos: [...state.todos, ...action.payload.todos],
         hasMore: action.payload.hasMore,
         loadingMore: false,
       };
@@ -119,6 +127,7 @@ function reducer(state: InfiniteScrollState, action: InfiniteScrollAction): Infi
       return {
         ...state,
         todos: state.todos.filter(item => item.id !== action.payload.id),
+        totalCount: Math.max(0, state.totalCount - 1),
       };
 
     case InfiniteScrollActionType.EDIT_TODO:
@@ -136,7 +145,6 @@ function reducer(state: InfiniteScrollState, action: InfiniteScrollAction): Infi
       return state;
   }
 }
-
 // 4. Context 생성
 type InfiniteScrollContextValue = {
   todos: Todo[];
@@ -200,6 +208,11 @@ export const InfiniteScrollProvider: React.FC<InfiniteScrollProviderProps> = ({
 
   // 데이터 더 보기 기능
   const loadMoreTodos = async (): Promise<void> => {
+    // 이미 로딩 중이거나 더 이상 불러올 데이터가 없으면 중단
+    if (state.loadingMore || !state.hasMore) {
+      return;
+    }
+
     try {
       dispatch({ type: InfiniteScrollActionType.SET_LOADING_MORE, payload: true });
       const result = await getTodosInfinite(state.todos.length, itemsPerPage);
@@ -213,6 +226,7 @@ export const InfiniteScrollProvider: React.FC<InfiniteScrollProviderProps> = ({
         })),
       );
 
+      // 데이터가 실제로 로드되었을 때만 상태 업데이트
       dispatch({
         type: InfiniteScrollActionType.APPEND_TODOS,
         payload: { todos: result.todos, hasMore: result.hasMore },
@@ -231,32 +245,31 @@ export const InfiniteScrollProvider: React.FC<InfiniteScrollProviderProps> = ({
         console.log('글 등록에 실패하였습니다.');
         return;
       }
-      // DB 업데이트 후 state 업데이트
+      // DB 업데이트 후 State 업데이트
       dispatch({ type: InfiniteScrollActionType.ADD_TODO, payload: { todo: result } });
     } catch (error) {
-      console.log(`새 Todo 등록 오류 : ${error}`);
+      console.log(`새 Todo 등록 오류 : ${error} `);
     }
   };
 
   // Todo 토글
   const toggleTodo = async (id: number): Promise<void> => {
     try {
-      // 현재 전달 된 id 에 해당하는 todo 항목의 completed 를 파악한다.
+      // 현재 전달된 id 에 해당하는 todo 항목의 completed 를 파악한다.
       const currentTodo = state.todos.find(item => item.id === id);
       if (!currentTodo) {
-        console.log('Toto 를 찾지 못했습니다. : ', id);
+        console.log('Todo 를 찾지 못했습니다 : ', id);
         return;
       }
-
       const result = await updatedSerciveToggleTodo(id, !currentTodo.completed);
       if (result) {
         // DB 업데이트 후 state 업데이트
         dispatch({ type: InfiniteScrollActionType.TOGGLE_TODO, payload: { id } });
       } else {
-        console.log('할일 상태 업데이트 실패');
+        console.log('할일 상태 업데이트 실패 ');
       }
     } catch (error) {
-      console.log(`상태 변경 오류 : ${error}`);
+      console.log(`상태변경 오류 : ${error} `);
     }
   };
 
@@ -267,7 +280,7 @@ export const InfiniteScrollProvider: React.FC<InfiniteScrollProviderProps> = ({
       // DB 업데이트 후 state 처리
       dispatch({ type: InfiniteScrollActionType.DELETE_TODO, payload: { id } });
     } catch (error) {
-      console.log(`삭제 오류 : ${error}`);
+      console.log(`삭제 오류 : ${error} `);
     }
   };
 
@@ -276,13 +289,13 @@ export const InfiniteScrollProvider: React.FC<InfiniteScrollProviderProps> = ({
     try {
       const updatedTodo = await updateTodo(id, { title });
       if (updatedTodo) {
-        // 아래는 그냥 state 만 업데이트 한다. (실제 DB 에 업데이트하고 ==> state 업데이트)
+        // 아래는 그냥 state 만 업데이트 한다. (실제 DB에 업데이트하고 ==> State)
         dispatch({ type: InfiniteScrollActionType.EDIT_TODO, payload: { id, title } });
       } else {
-        console.log(`업데이트에 실패하였습니다.`);
+        console.log('업데이트에 실패하였습니다.');
       }
     } catch (error) {
-      console.log(`업데이트 오류 : ${error}`);
+      console.log(`업데이트 오류 : ${error} `);
     }
   };
 
