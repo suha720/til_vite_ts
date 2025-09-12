@@ -163,11 +163,12 @@ const InfiniteTodoList = () => {
       {todos.length === 0 ? (
         <p>등록된 할일이 없습니다.</p>
       ) : (
-        <div>
+        <div style={{ height: 500, overflow: 'auto' }}>
           <InfiniteScroll
             dataLength={todos.length}
             next={loadMoreTodos}
             hasMore={hasMore}
+            height={500}
             loader={<div>데이터를 불러오는 중...</div>}
             endMessage={<div>모든 데이터를 불러왔습니다.</div>}
           >
@@ -229,7 +230,7 @@ const InfiniteTodoList = () => {
 function TodosInfinitePage() {
   return (
     <InfiniteScrollProvider itemsPerPage={10}>
-      <div style={{ height: 500, overflow: 'auto' }}>
+      <div>
         <h2>무한 스크롤 Todo 목록</h2>
         <div>
           <InfiniteTodoWrite />
