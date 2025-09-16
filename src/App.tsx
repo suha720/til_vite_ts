@@ -9,6 +9,10 @@ import Protected from './components/Protected';
 import ProfilePage from './pages/ProfilePage';
 import AdminPage from './pages/AdminPage';
 import TodosInfinitePage from './pages/TodosInfinitePage';
+import TodoListPage from './pages/TodoListPage';
+import TodoWritePage from './pages/TodoWritePage';
+import TodoEditPage from './pages/TodoEditPage';
+import TodoDetailPage from './pages/TodoDetailPage';
 
 const TopBar = () => {
   const { signOut, user } = useAuth();
@@ -79,7 +83,35 @@ function App() {
               path="/todos"
               element={
                 <Protected>
-                  <TodosPage />
+                  {/* <TodosPage /> */}
+                  <TodoListPage />
+                </Protected>
+              }
+            />
+            <Route
+              path="/todos/write"
+              element={
+                <Protected>
+                  {/* <TodosPage /> */}
+                  <TodoWritePage />
+                </Protected>
+              }
+            />
+            <Route
+              path="/todos/edit/:id"
+              element={
+                <Protected>
+                  {/* <TodosPage /> */}
+                  <TodoEditPage />
+                </Protected>
+              }
+            />
+            <Route
+              path="/todos/detail/:id"
+              element={
+                <Protected>
+                  {/* <TodosPage /> */}
+                  <TodoDetailPage />
                 </Protected>
               }
             />
