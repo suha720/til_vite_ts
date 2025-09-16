@@ -1,20 +1,11 @@
-// import React, { useEffect, useState } from 'react';
-// import { TodoProvider, useTodos } from '../contexts/TodoContext';
-// import TodoWrite from '../components/todos/TodoWrite';
-// import TodoList from '../components/todos/TodoList';
-// import type { Profile } from '../types/TodoType';
-// import { useAuth } from '../contexts/AuthContext';
-// import { getProfile } from '../lib/profile';
-// import Pagination from '../components/Pagination';
-
-import { useEffect, useState } from 'react';
-import Pagination from '../components/Pagination';
-import TodoList from '../components/todos/TodoList';
-import TodoWrite from '../components/todos/TodoWrite';
-import { useAuth } from '../contexts/AuthContext';
+import React, { useEffect, useState } from 'react';
 import { TodoProvider, useTodos } from '../contexts/TodoContext';
-import { getProfile } from '../lib/profile';
+import TodoWrite from '../components/todos/TodoWrite';
+import TodoList from '../components/todos/TodoList';
 import type { Profile } from '../types/TodoType';
+import { useAuth } from '../contexts/AuthContext';
+import { getProfile } from '../lib/profile';
+import Pagination from '../components/Pagination';
 
 // 용서하세요. 컴포넌트는 여기서 작성하겠습니다.
 // 필요하시면 이동 부탁합니다.
@@ -29,12 +20,11 @@ const TodosContent = ({
   handleChangePage,
 }: TodosContentProps): JSX.Element => {
   const { totalCount, totalPages } = useTodos();
-
   return (
     <div>
       <div>
-        {/* 새글 등록시 1페이지로 이동후 목록 새로고침 */}
-        <TodoWrite  handleChangePage={handleChangePage}/>
+        {/* 새글 등록시 1페이지로 이동후 목록새로고침 */}
+        <TodoWrite handleChangePage={handleChangePage} />
       </div>
       <div>
         <TodoList />
@@ -58,13 +48,13 @@ function TodosPage() {
   // 페이지네이션 관련
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
+  // const itemsPerPage = 10;
   // 페이지 변경 핸들러
   const handleChangePage = (page: number) => {
     setCurrentPage(page);
   };
 
   const [profile, setProfile] = useState<Profile | null>(null);
-
   // 프로필 가져오기
   const loadProfile = async () => {
     try {
@@ -86,7 +76,11 @@ function TodosPage() {
 
   return (
     <div>
-      <h2>{profile?.nickname}할 일</h2>
+      <div className="page-header">
+        <h2 className="page-title">🍈 할 일 관리</h2>
+        {profile?.nickname && <p className="page-subtitle">{profile.nickname}님의 Todo 관리</p>}
+      </div>
+
       <TodoProvider currentPage={currentPage} limit={itemsPerPage}>
         <TodosContent
           currentPage={currentPage}

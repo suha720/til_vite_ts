@@ -46,7 +46,11 @@ function reducer(
   switch (action.type) {
     case TodoActionType.ADD: {
       const { todo } = action.payload;
-      return { ...state, todos: [todo, ...state.todos] };
+      return {
+        ...state,
+        todos: [todo, ...state.todos],
+        totalCount: state.totalCount + 1, // 새 항목 추가 시 전체 개수 증가
+      };
     }
     case TodoActionType.TOGGLE: {
       const { id } = action.payload;
@@ -58,7 +62,11 @@ function reducer(
     case TodoActionType.DELETE: {
       const { id } = action.payload;
       const arr = state.todos.filter(item => item.id !== id);
-      return { ...state, todos: arr };
+      return {
+        ...state,
+        todos: arr,
+        totalCount: Math.max(0, state.totalCount - 1), // 항목 삭제 시 전체 개수 감소 (0 이하로는 내려가지 않음)
+      };
     }
     case TodoActionType.EDIT: {
       const { id, title } = action.payload;
@@ -92,23 +100,23 @@ type TodoContextValue = {
 const TodoContext = createContext<TodoContextValue | null>(null);
 
 // 4. provider 생성
-// 1번 방법 :  props 정리하기
+// 1. props 정의하기
 // interface TodoProviderProps {
 //   children?: React.ReactNode;
 //   currentPage?: number;
 //   limit?: number;
 // }
-
-// 2번 방법 :
 interface TodoProviderProps extends PropsWithChildren {
   currentPage?: number;
   limit?: number;
 }
+
 export const TodoProvider: React.FC<TodoProviderProps> = ({
   children,
   currentPage = 1,
   limit = 10,
 }): JSX.Element => {
+  // useReducer 로 상태관리
   const [state, dispatch] = useReducer(reducer, initialState);
 
   // dispatch 를 위한 함수 표현식 모음

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 interface PaginationProps {
   totalCount: number;
@@ -95,7 +95,12 @@ const Pagination = ({
           </React.Fragment>
         ))}
 
-        <button onClick={()=>handleChangePage(currentPage+1)} disabled={currentPage === totalPages}>다음</button>
+        <button
+          onClick={() => handleChangePage(currentPage + 1)}
+          disabled={currentPage === totalPages}
+        >
+          다음
+        </button>
       </div>
     </div>
   );
