@@ -5,6 +5,7 @@ import type { Profile, Todo } from '../types/TodoType';
 import { getProfile } from '../lib/profile';
 import { getTodoById, toggleTodo, updateTodo } from '../services/TodoService';
 import Loading from '../components/Loading';
+import RichTextEditor from '../components/RichTextEditor';
 
 function TodoEditPage() {
   const { user } = useAuth();
@@ -83,8 +84,8 @@ function TodoEditPage() {
         alert('오류가 발생하였습니다. 잠시 후 다시 시도해 주세요.');
       }
     } catch (error) {
-      console.log('상태 변경 실패 : ', error);
-      alert('에러가 발생하였습니다.');
+      console.log('상태 변경 실패: ', error);
+      alert('에러가 발생하였습니다');
     } finally {
       setToggleLoading(false);
     }
@@ -93,11 +94,12 @@ function TodoEditPage() {
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value);
   };
-
-  const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setContent(e.target.value);
+  // const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+  //   setContent(e.target.value);
+  // };
+  const handleContentChange = (value: string) => {
+    setContent(value);
   };
-
   const handleSave = async () => {
     if (!todo) return;
 
@@ -117,7 +119,7 @@ function TodoEditPage() {
       }
     } catch (error) {
       console.log('수정 실패 : ', error);
-      alert('수정에 실패하였습니다.');
+      alert('수정에 실패하였습니다');
     } finally {
       setSaving(false);
     }
@@ -190,11 +192,17 @@ function TodoEditPage() {
         </div>
         <div className="form-group">
           <label className="form-label">상세 내용</label>
-          <textarea
+          {/* <textarea
             className="form-input"
             onChange={handleContentChange}
             value={content}
             rows={6}
+            placeholder="상세 내용을 입력하세요.(선택사항)"
+            disabled={saving}
+          /> */}
+          <RichTextEditor
+            value={content}
+            onChange={handleContentChange}
             placeholder="상세 내용을 입력하세요.(선택사항)"
             disabled={saving}
           />
