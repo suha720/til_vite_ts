@@ -20,7 +20,7 @@ function SignInPage() {
     } else {
       setMsg('로그인 성공');
       // 바로 이동시키기
-      navigate(`/todos`);
+      navigate('/todos');
     }
   };
   return (
@@ -61,19 +61,18 @@ function SignInPage() {
         </form>
 
         {/* SNS 로그인 영역 */}
-        <div style={{ display: 'flex', alignItems: 'center', margin: 'var(--space-6) ' }}>
+        <div style={{ display: 'flex', alignItems: 'center', margin: 'var(--space-6) 0' }}>
           <div style={{ flex: 1, height: '1px', backgroundColor: 'var(--gray-300)' }}></div>
           <span style={{ padding: '0 var(--space-4)', fontSize: '14px' }}>또는</span>
           <div style={{ flex: 1, height: '1px', backgroundColor: 'var(--gray-300)' }}></div>
         </div>
 
-        {/* 카카오 로그인 버튼 : 오류 메시지는 사용자도 볼 수 있어야 함. */}
+        {/* 카카오 로그인 버튼 : 오류 메시지는 사용자도 볼 수 있어야 함.*/}
         <KakaoLoginButton onError={error => setMsg(`카카오 로그인 오류 : ${error}`)} />
-        {/* 구글 로그인 버튼 : 오류 메시지는 사용자도 볼 수 있어야 함. */}
+        {/* 구글 로그인 버튼 :  오류 메시지는 사용자도 볼 수 있어야 함.  */}
         <div style={{ marginTop: 'var(--space-3)' }}>
           <GoogleLoginButton onError={error => setMsg(`구글 로그인 오류 : ${error}`)} />
         </div>
-
         {/* 메시지 출력 */}
         {msg && (
           <p

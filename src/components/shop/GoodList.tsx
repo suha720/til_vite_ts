@@ -12,7 +12,6 @@ const GoodList = () => {
     marginBottom: 20,
     background: '#fff',
   };
-
   const boxrow: React.CSSProperties = {
     display: 'flex',
     alignItems: 'center',
@@ -28,7 +27,6 @@ const GoodList = () => {
         {goods.map(item => (
           <li key={item.id} style={boxrow}>
             <span>
-              제품명:
               <strong>{item.name}</strong> {item.price.toLocaleString()} 원
             </span>
             <button onClick={() => addCart(item.id)}>담기</button>

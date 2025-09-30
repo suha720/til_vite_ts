@@ -1,13 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import { useAuth } from '../contexts/AuthContext';
-import { getProfile } from '../lib/profile';
-import type { Profile, Todo } from '../types/TodoType';
-import { TodoProvider, useTodos } from '../contexts/TodoContext';
-import TodoWrite from '../components/todos/TodoWrite';
-import TodoList from '../components/todos/TodoList';
+import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import Pagination from '../components/Pagination';
 import TodoWriteBox from '../components/todos/TodoWriteBox';
-import { Link } from 'react-router-dom';
+import { useAuth } from '../contexts/AuthContext';
+import { TodoProvider, useTodos } from '../contexts/TodoContext';
+import { getProfile } from '../lib/profile';
+import type { Profile, Todo } from '../types/TodoType';
 
 // 용서하세요. 나중에 추출하세요. ^^
 type TodoItemProps = {

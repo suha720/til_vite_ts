@@ -1,6 +1,5 @@
-import type { ShopStateType } from './type';
+import type { ShopStateType } from './types';
 
-// 초기값
 export const initialState: ShopStateType = {
   balance: 100000,
   cart: [],

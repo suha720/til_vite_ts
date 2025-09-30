@@ -28,9 +28,9 @@ export const getTodoById = async (id: number): Promise<Todo | null> => {
 };
 
 // Todo 생성
-// 로그인을 하고 나면 실제로 user_id 가 이미 파악이 됨.
-// TodoInsert 에서 user_id : 값을 생략하는 타입을 생성
-// 타입스크립트에서 Omit 을 사용하면, 특정 키를 제거할 수 있음
+// 로그인을 하고 나면 실제로 user_id 가 이미 파악이 됨
+// TodoInsert 에서 user_id : 값 을 생략하는 타입을 생성
+// 타입스크립트에서 Omit 을 이용하면, 특정 키를 제거할 수 있음.
 export const createTodo = async (newTodo: Omit<TodoInsert, 'user_id'>): Promise<Todo | null> => {
   try {
     // 현재 로그인 한 사용자 정보 가져오기
@@ -56,6 +56,7 @@ export const createTodo = async (newTodo: Omit<TodoInsert, 'user_id'>): Promise<
     return null;
   }
 };
+
 // Todo 수정
 // 로그인을 하고 나면 실제로 user_id 가 이미 파악이 됨
 // TodoUpdate 에서 user_id : 값 을 생략하는 타입을 생성
@@ -161,7 +162,9 @@ export const deleteTodo = async (id: number): Promise<void> => {
       // imageUrls 에서 url 을 찾아서 파일 삭제 supabase 실행함.
       for (const url of imageUrls) {
         try {
+          // url : https://erontyifxxztudowhees.supabase.co/storage/v1/object/public/todo-images/6b66829c-ec6c-4750-ad15-90641c3cb0fe/6b66829c-ec6c-4750-ad15-90641c3cb0fe_1758243951105_icon.png
           const urlParts = url.split('/');
+          // urlParas : [ "https:",  "", "erontyifxxztudowhees.supabase.co"....]
           // todo-images 라는 버킷이 몇번째 인지를 알아냄.
           // 버킷 다음이 실제 파일의 경로가 됨.
           const bucketIndex = urlParts.findIndex((item: string) => item === 'todo-images');
@@ -194,7 +197,8 @@ export const deleteTodo = async (id: number): Promise<void> => {
     console.log(error);
   }
 };
-// completed 토글
+
+// Completed Toggle
 export const toggleTodo = async (id: number, completed: boolean): Promise<Todo | null> => {
   return updateTodo(id, { completed });
 };

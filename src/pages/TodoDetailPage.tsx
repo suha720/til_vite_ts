@@ -3,7 +3,7 @@ import { useAuth } from '../contexts/AuthContext';
 import { useNavigate, useParams } from 'react-router-dom';
 import type { Profile, Todo } from '../types/TodoType';
 import { getProfile } from '../lib/profile';
-import { deleteTodo, getTodoById, getTodos } from '../services/TodoService';
+import { deleteTodo, getTodoById, getTodos } from '../services/todoService';
 import Loading from '../components/Loading';
 import DOMPurify from 'dompurify';
 
@@ -169,15 +169,15 @@ function TodoDetailPage() {
             }}
           >
             <h4 style={{ margin: '0 0 var(--space-3) 0', color: 'var(--gray-700)' }}>상세 내용</h4>
+
             <div
               style={{
                 margin: 0,
                 color: 'var(--gray-600)',
                 lineHeight: '1.6',
-                whiteSpace: 'pre-wrap',
               }}
               dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(todo.content) }}
-            ></div>
+            />
           </div>
         )}
         {/* 추가정보 출력 */}
@@ -220,7 +220,7 @@ function TodoDetailPage() {
 
         <div style={{ display: 'flex', gap: 'var(--space-3)', justifyContent: 'center' }}>
           <button className="btn btn-secondary" onClick={() => navigate('/todos')}>
-            목록으로 돌아가기
+            📋 목록으로 돌아가기
           </button>
         </div>
       </div>

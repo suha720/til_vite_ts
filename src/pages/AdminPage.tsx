@@ -13,7 +13,7 @@ function AdminPage() {
   const [loading, setLoading] = useState(true);
 
   // 관리자 확인
-  const isAdmin = user?.email === 'dutrfwq@topdatamaster.com';
+  const isAdmin = user?.email === 'tarolong@naver.com';
   useEffect(() => {
     // console.log(user?.email);
     // console.log(user?.id);
@@ -137,10 +137,9 @@ function AdminPage() {
             {deleteRequests.map(item => (
               <div key={item.id} className="admin-request-item">
                 <div className="admin-request-header">
-                  <h4 style={{ margin: 0, color: 'var(--gray-800)' }}>👤 : {item.user_email}</h4>
+                  <h4 style={{ margin: 0, color: 'var(--gray-800)' }}>👤 {item.user_email}</h4>
                   <span className="admin-status-badge">대기 중</span>
                 </div>
-
                 {/* 상세정보 */}
                 <div className="admin-request-details">
                   <div className="admin-detail-row">
@@ -158,7 +157,6 @@ function AdminPage() {
                     <span className="admin-detail-value">{item.reason}</span>
                   </div>
                 </div>
-
                 {/* 액션들 */}
                 <div className="admin-request-actions">
                   <button

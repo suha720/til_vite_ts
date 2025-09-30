@@ -1,10 +1,11 @@
-import Cart from '../components/shop/Cart';
+import React from 'react';
 import GoodList from '../components/shop/GoodList';
+import Cart from '../components/shop/Cart';
 
-const GoodsPage = () => {
+function GoodsPage() {
   const box: React.CSSProperties = {
     padding: 16,
-    border: '1px solide #e5e7eb',
+    border: '1px solid #e5e7eb',
     borderRadius: 12,
     background: '#fafafa',
     marginTop: 12,
@@ -12,11 +13,13 @@ const GoodsPage = () => {
   };
   return (
     <div style={box}>
-      <h2>💤 판매 제품 리스트</h2>
-      <GoodList />
-      <Cart />
+      <h2>😎 판매 제품 리스트</h2>
+      <div>
+        <GoodList />
+        <Cart />
+      </div>
     </div>
   );
-};
+}
 
 export default GoodsPage;

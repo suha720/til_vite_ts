@@ -1,4 +1,4 @@
-export * from './type';
+export * from './types';
 // 아래의 경우는 충돌 발생 소지 있음.
 export { initialState } from './state';
 export { calcTotal } from './utils';
@@ -6,4 +6,4 @@ export { calcTotal } from './utils';
 export { reducer } from './reducer';
 export { ShopContext, ShopProvider } from './ShopContext';
 export { useShop } from './hooks/useShop';
-export { useShopSelectors } from './hooks/useShopSelectors';
+export { useShopSelectors } from './hooks/useShopSelcectors';

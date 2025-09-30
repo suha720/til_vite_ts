@@ -1,11 +1,9 @@
 import { useEffect, useState } from 'react';
-
 type UserProps = {
   children?: React.ReactNode;
   name: string;
   age: number;
 };
-
 export type UserType = {
   name: string;
   age: number;
@@ -19,8 +17,6 @@ const User = ({ name, age }: UserProps): JSX.Element => {
     }
   };
   useEffect(() => {
-    // key 와 value 가 같으므로 축약 가능
-    // setUser({ name: name, age: age });
     setUser({ name, age });
   }, []);
   return (
@@ -33,7 +29,7 @@ const User = ({ name, age }: UserProps): JSX.Element => {
           </span>
         ) : (
           '사용자 정보가 없습니다.'
-        )}{' '}
+        )}
       </h2>
       <div>
         <button onClick={handleClick}>나이 증가</button>

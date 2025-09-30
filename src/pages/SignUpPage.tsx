@@ -42,16 +42,17 @@ function SignUpPage() {
       setEmailCheckStatus('taken');
       return;
     }
+
     setEmailCheckStatus('checking');
     setEmailCheckMessage('이메일 중복 확인 중...');
     try {
-      // DB 에 직접 이메일글자를 보내고 중복확인 진행.
+      // DB 에 직접 이메일 글자를 보내고 중복확인 진행.
       const result = await checkEmailExists(email);
       if (result.error) {
         setEmailCheckMessage(`오류 : ${result.error}`);
         setEmailCheckStatus('taken');
       } else if (result.exists) {
-        setEmailCheckMessage('이미지 사용 중인 이메일입니다.');
+        setEmailCheckMessage('이미 사용 중인 이메일입니다.');
         setEmailCheckStatus('taken');
       } else {
         setEmailCheckMessage('사용 가능한 이메일입니다.');
@@ -79,13 +80,12 @@ function SignUpPage() {
     setNicknameCheckMessage('닉네임 중복 확인 중...');
     try {
       // DB 에 직접 닉네임 글자를 보내고 중복확인 진행.
-
       const result = await checkNicknameExists(nickName);
       if (result.error) {
         setNicknameCheckMessage(`오류 : ${result.error}`);
         setNicknameCheckStatus('taken');
       } else if (result.exists) {
-        setNicknameCheckMessage('이미지 사용 중인 닉네임입니다.');
+        setNicknameCheckMessage('이미 사용 중인 닉네임입니다.');
         setNicknameCheckStatus('taken');
       } else {
         setNicknameCheckMessage('사용 가능한 닉네임입니다.');
@@ -365,14 +365,13 @@ function SignUpPage() {
           onError={error => setMsg(`카카오 로그인 오류 : ${error}`)}
           onSuccess={message => setMsg(message)}
         />
-        {/* 구글 로그인 버튼 : 오류 메시지는 사용자도 볼 수 있어야 함. */}
+        {/* 구글 로그인 버튼 :  오류 메시지는 사용자도 볼 수 있어야 함.  */}
         <div style={{ marginTop: 'var(--space-3)' }}>
           <GoogleLoginButton
             onError={error => setMsg(`구글 로그인 오류 : ${error}`)}
             onSuccess={message => setMsg(message)}
           />
         </div>
-
         {/* 메시지 출력 */}
         {msg && (
           <p

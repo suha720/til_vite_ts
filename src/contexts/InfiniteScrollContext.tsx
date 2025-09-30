@@ -10,10 +10,10 @@ import type { Todo } from '../types/TodoType';
 import {
   getTodosInfinite,
   updateTodo,
-  toggleTodo as updatedSerciveToggleTodo,
+  toggleTodo as updatedServiceToggleTodo,
   deleteTodo as deletedServiceTodo,
   createTodo,
-} from '../services/TodoService';
+} from '../services/todoService';
 import { supabase } from '../lib/supabase';
 
 // 1. 초기값
@@ -261,7 +261,7 @@ export const InfiniteScrollProvider: React.FC<InfiniteScrollProviderProps> = ({
         console.log('Todo 를 찾지 못했습니다 : ', id);
         return;
       }
-      const result = await updatedSerciveToggleTodo(id, !currentTodo.completed);
+      const result = await updatedServiceToggleTodo(id, !currentTodo.completed);
       if (result) {
         // DB 업데이트 후 state 업데이트
         dispatch({ type: InfiniteScrollActionType.TOGGLE_TODO, payload: { id } });

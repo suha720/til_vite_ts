@@ -1,6 +1,6 @@
 import { initialState } from './state';
-import { ShopActionType } from './type';
-import type { CartType, ShopAction, ShopStateType } from './type';
+import type { CartType, ShopAction, ShopStateType } from './types';
+import { ShopActionType } from './types';
 import { calcTotal } from './utils';
 
 export function reducer(state: ShopStateType, action: ShopAction) {

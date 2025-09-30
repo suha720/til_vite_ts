@@ -1,24 +1,27 @@
 import { Link, Route, BrowserRouter as Router, Routes } from 'react-router-dom';
-import { AuthProvider, useAuth } from './contexts/AuthContext';
-import HomePage from './pages/HomePage';
-import SignUpPage from './pages/SignUpPage';
-import SignInPage from './pages/SignInPage';
-import TodosPage from './pages/TodosPage';
-import AuthCallback from './pages/AuthCallback';
 import Protected from './components/Protected';
-import ProfilePage from './pages/ProfilePage';
+import { AuthProvider, useAuth } from './contexts/AuthContext';
 import AdminPage from './pages/AdminPage';
-import TodosInfinitePage from './pages/TodosInfinitePage';
-import TodoListPage from './pages/TodoListPage';
-import TodoWritePage from './pages/TodoWritePage';
-import TodoEditPage from './pages/TodoEditPage';
+import AuthCallback from './pages/AuthCallback';
+import HomePage from './pages/HomePage';
+import ProfilePage from './pages/ProfilePage';
+import SignInPage from './pages/SignInPage';
+import SignUpPage from './pages/SignUpPage';
 import TodoDetailPage from './pages/TodoDetailPage';
+import TodoEditPage from './pages/TodoEditPage';
+import TodoListPage from './pages/TodoListPage';
+import TodosInfinitePage from './pages/TodosInfinitePage';
+import TodoWritePage from './pages/TodoWritePage';
+import DirectChatPage from './pages/chat/DirectChatPage';
+// 1:1 채팅 관련 css
+import './components/chat/chat.css';
+import { DirectChatProider } from './contexts/DirectChatContext';
 
 const TopBar = () => {
   const { signOut, user } = useAuth();
   // 관리자인 경우 메뉴 추가로 출력하기
   // isAdmin 에는 true/false
-  const isAdmin = user?.email === 'dutrfwq@topdatamaster.com';
+  const isAdmin = user?.email === 'tarolong@naver.com';
 
   return (
     <nav className="nav">
@@ -46,6 +49,11 @@ const TopBar = () => {
         </Link>
       )}
       {user && (
+        <Link to="/chat" className="nav-link">
+          1 : 1 채팅
+        </Link>
+      )}
+      {user && (
         <Link to="/profile" className="nav-link">
           프로필
         </Link>
@@ -67,89 +75,96 @@ const TopBar = () => {
 
 function App() {
   return (
-    <AuthProvider>
-      <div className="container">
-        <div className="page-header">
-          <h1 className="page-title">👩‍🦰 Todo Service</h1>
+    <DirectChatProider>
+      <AuthProvider>
+        <div className="container">
+          <div className="page-header">
+            <h1 className="page-title">👩‍🦰 Todo Service</h1>
+          </div>
+          <Router
+            future={{
+              v7_relativeSplatPath: true,
+              v7_startTransition: true,
+            }}
+          >
+            <TopBar />
+            <Routes>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/signup" element={<SignUpPage />} />
+              <Route path="/signin" element={<SignInPage />} />
+              <Route path="/auth/callback" element={<AuthCallback />} />
+              <Route
+                path="/todos"
+                element={
+                  <Protected>
+                    <TodoListPage />
+                  </Protected>
+                }
+              />
+              <Route
+                path="/todos/write"
+                element={
+                  <Protected>
+                    <TodoWritePage />
+                  </Protected>
+                }
+              />
+              <Route
+                path="/todos/edit/:id"
+                element={
+                  <Protected>
+                    <TodoEditPage />
+                  </Protected>
+                }
+              />
+              <Route
+                path="/todos/detail/:id"
+                element={
+                  <Protected>
+                    <TodoDetailPage />
+                  </Protected>
+                }
+              />
+              <Route
+                path="/todos-infinite"
+                element={
+                  <Protected>
+                    <TodosInfinitePage />
+                  </Protected>
+                }
+              />
+
+              <Route
+                path="/profile"
+                element={
+                  <Protected>
+                    <ProfilePage />
+                  </Protected>
+                }
+              />
+
+              <Route
+                path="/admin"
+                element={
+                  <Protected>
+                    <AdminPage />
+                  </Protected>
+                }
+              />
+              {/* 1 : 1 채팅 페이지 */}
+              <Route
+                path="/chat"
+                element={
+                  <Protected>
+                    <DirectChatPage />
+                  </Protected>
+                }
+              />
+            </Routes>
+          </Router>
         </div>
-        <Router
-          future={{
-            v7_startTransition: true,
-            v7_relativeSplatPath: true,
-          }}
-        >
-          <TopBar />
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/signup" element={<SignUpPage />} />
-            <Route path="/signin" element={<SignInPage />} />
-            <Route path="/auth/callback" element={<AuthCallback />} />
-            <Route
-              path="/todos"
-              element={
-                <Protected>
-                  {/* <TodosPage /> */}
-                  <TodoListPage />
-                </Protected>
-              }
-            />
-            <Route
-              path="/todos/write"
-              element={
-                <Protected>
-                  {/* <TodosPage /> */}
-                  <TodoWritePage />
-                </Protected>
-              }
-            />
-            <Route
-              path="/todos/edit/:id"
-              element={
-                <Protected>
-                  {/* <TodosPage /> */}
-                  <TodoEditPage />
-                </Protected>
-              }
-            />
-            <Route
-              path="/todos/detail/:id"
-              element={
-                <Protected>
-                  {/* <TodosPage /> */}
-                  <TodoDetailPage />
-                </Protected>
-              }
-            />
-            <Route
-              path="/todos-infinite"
-              element={
-                <Protected>
-                  <TodosInfinitePage />
-                </Protected>
-              }
-            />
-
-            <Route
-              path="/profile"
-              element={
-                <Protected>
-                  <ProfilePage />
-                </Protected>
-              }
-            />
-
-            <Route
-              path="/admin"
-              element={
-                <Protected>
-                  <AdminPage />
-                </Protected>
-              }
-            />
-          </Routes>
-        </Router>
-      </div>
-    </AuthProvider>
+      </AuthProvider>
+    </DirectChatProider>
   );
 }
 

@@ -867,6 +867,7 @@ textarea:focus {
 .pagination-controls {
   display: flex;
   align-self: center;
+  justify-content: center;
   gap: var(--space-2);
 }
 .pagination-btn {
@@ -921,7 +922,6 @@ textarea:focus {
   background-color: var(--primary-600);
   border-color: var(--primary-600);
 }
-
 /* 반응형 */
 @media screen and (max-width: 768px) {
   .pagination-controls {
@@ -935,4 +935,3 @@ textarea:focus {
     font-size: 13px;
   }
 }
-

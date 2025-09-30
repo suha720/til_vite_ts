@@ -29,7 +29,6 @@ type AuthContextType = {
   signInWithKakao: () => Promise<{ error?: string }>;
   // 구글 로그인 함수
   signInWithGoogle: () => Promise<{ error?: string }>;
-
   // 카카오 계정 연동 해제 함수
   unlinkKakaoAccount: () => Promise<{ error?: string; success?: boolean; message?: string }>;
   // 구글 계정 연동 해제 함수
@@ -128,9 +127,9 @@ export const AuthProvider: React.FC<PropsWithChildren> = ({ children }) => {
 
   const checkEmailExists: AuthContextType['checkEmailExists'] = async email => {
     // PostgreSQL Function
-    console.log(`checkEmailExists : ${email}`);
     try {
       const { error, data } = await supabase.rpc('check_email_exists', { email_param: email });
+
       if (error) {
         return { exists: false, error: '이메일 확인 중 오류가 발생했습니다.' };
       }
@@ -263,15 +262,19 @@ export const AuthProvider: React.FC<PropsWithChildren> = ({ children }) => {
       if (newPassword.length < 6) {
         return { error: '비밀번호는 최소 6자 이상이어야 합니다.' };
       }
-      // Supabase 에서 비밀번호 업데이트
+      // Supabase에서 비밀번호 업데이트
       const { error } = await supabase.auth.updateUser({ password: newPassword });
+
       if (error) {
-        console.log('비밀번호 변경 실패 : ', error);
-        return { error: '비민번호 변경에 실패했습니다.' };
+        console.log('비밀번호 변경 실패: ', error.message);
+        return { error: '비밀번호 변경에 실패했습니다.' };
       }
-      return { success: true, message: '비밀번호가 성공적으로 변경되었습니다.' };
+      return {
+        success: true,
+        message: '비밀번호가 성공적으로 변경되었습니다.',
+      };
     } catch (err) {
-      console.log('비밀번호 변경 오류 : ', err);
+      console.log('비밀번호 변경 오류: ', err);
       return { error: '비밀번호 변경 중 오류가 발생했습니다.' };
     }
   };
