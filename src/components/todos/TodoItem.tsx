@@ -5,7 +5,7 @@ import {
   updateTodo as updateTodoService,
   toggleTodo as toggleTodoService,
   deleteTodo as deleteTodoService,
-} from '../../services/todoService';
+} from '../../services/todoSV';
 
 type TodoItemProps = {
   todo: Todo;

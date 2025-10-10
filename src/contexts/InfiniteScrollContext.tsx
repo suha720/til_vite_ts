@@ -13,7 +13,7 @@ import {
   toggleTodo as updatedServiceToggleTodo,
   deleteTodo as deletedServiceTodo,
   createTodo,
-} from '../services/todoService';
+} from '../services/todoSV';
 import { supabase } from '../lib/supabase';
 
 // 1. 초기값

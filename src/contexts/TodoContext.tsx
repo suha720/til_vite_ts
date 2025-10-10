@@ -8,7 +8,7 @@ import React, {
 
 import type { Todo } from '../types/TodoType';
 // 전체 DB 가져오기
-import { getTodos, getTodosPaginated } from '../services/todoService';
+import { getTodos, getTodosPaginated } from '../services/todoSV';
 
 // 1. 초기값 형태가 페이지 객체 형태로 추가
 type TodosState = { todos: Todo[]; totalCount: number; totalPages: number; currentPage: number };
