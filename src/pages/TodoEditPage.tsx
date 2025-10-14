@@ -3,7 +3,7 @@ import { useAuth } from '../contexts/AuthContext';
 import { useNavigate, useParams } from 'react-router-dom';
 import type { Profile, Todo } from '../types/TodoType';
 import { getProfile } from '../lib/profile';
-import { getTodoById, toggleTodo, updateTodo } from '../services/todoSV';
+import { getTodoById, toggleTodo, updateTodo } from '../services/todoService';
 import Loading from '../components/Loading';
 import RichTextEditor from '../components/RichTextEditor';
 import { supabase } from '../lib/supabase';

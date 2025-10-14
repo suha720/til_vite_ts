@@ -111,13 +111,14 @@ const DirectChatList = ({ onChatSelect, onCreateChat, selectedChatId }: DirectCh
   if (error) {
     return (
       <div className="chat-list">
-        <div className="error-message">
+        <div className="error-message ">
           <p>오류 : {error}</p>
           <button onClick={loadChats}>다시 시도</button>
         </div>
       </div>
     );
   }
+
   return (
     <div className="chat-list">
       {/* 채팅 목록 헤더 - 제목과 새 채팅 버튼 */}
